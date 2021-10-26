@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import serializer
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ViewSet, GenericViewSet
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.decorators import action
 from furryEC.utils.response import APIResponse
 from furryEC.libs import aws_ses
@@ -8,7 +9,7 @@ from furryEC.utils.logger import log
 from django.core.cache import cache
 import re
 from . import models
-
+from .throttings import SMSThrotting
 
 # Create your views here.
 
@@ -23,7 +24,7 @@ class LoginView(ViewSet):
             username = ser.context['user']
             return APIResponse(token=token, username=username)
         else:
-            return APIResponse(code='0', msg=ser.errors)
+            return APIResponse(code=0, msg=ser.errors)
 
     @action(methods=['GET'], detail=False)
     def send_email(self, request, *args, **kwargs):
@@ -43,16 +44,17 @@ class LoginView(ViewSet):
     @action(methods=['GET'], detail=False)
     def check_email(self, request, *args, **kwargs):
         email = request.query_params.get('email')
+        print(email)
+        if not email:
+            return APIResponse(code=0, msg='Please send the email only.')
         if not re.match('^.+@.+$', email):
+            print('here')
             return APIResponse(code=0, msg='The email format is wrong.')
         try:
-            user = models.User.objects.filter(email=email).first()
-            if user:
-                return APIResponse(code=1, msg='Success')
-            else:
-                return APIResponse(code=0, msg=f'No user using the email{email}')
-        except Exception as e:
-            log.error('Email：%s,短信发送失败,错误为：%s'%(email,str(e)))
+            models.User.objects.get(email=email)
+            return APIResponse(code=1, msg='Success')
+        except:
+            return APIResponse(code=0, msg='Email address invalid')
 
     # After completing the AWS SMS api process.
     @action(methods=['POST'], detail=False)
@@ -64,3 +66,14 @@ class LoginView(ViewSet):
             return APIResponse(token=token, username=username)
         else:
             return APIResponse(code=0, msg=ser.errors)
+
+
+class SignUpView(GenericViewSet, CreateModelMixin):
+    queryset = models.User.objects.all()
+    serializer_class = serializer.SignUpSerializer
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs) # response是一个Response对象->看源码
+        username = response.data.get('username')
+        print(response.data)
+        return APIResponse(code=1, msg='Create New user Successfully', username=username)

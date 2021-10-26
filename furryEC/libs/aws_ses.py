@@ -1,7 +1,7 @@
 import boto3
 
 """
-Using AWS SES to send the confirmation Email.(Custom template)
+Using AWS SES to send the confirmation Email.(Custom template/raw template)
 
 """
 
@@ -13,11 +13,9 @@ def get_credential_info():
 
 def send(ToAddresses, Sub_Data, code):
     info_list = get_credential_info()
-    print(info_list)
     aws_access_key_id = info_list[0]
     aws_secret_access_key = info_list[1]
     source_mail = info_list[2]
-    print(aws_secret_access_key, type(aws_secret_access_key))
 
     client = boto3.client('ses',
                           aws_access_key_id=aws_access_key_id,

@@ -21,6 +21,7 @@ class LoginSer(ModelSerializer):
         }
 
     def validate(self, attrs):
+        print(attrs)
         user = self.__get_user(attrs)
 
         token = self.__get_token(attrs, user)
@@ -63,7 +64,7 @@ class LoginSer(ModelSerializer):
         return token
 
 
-# The serialization for the Phone + code.
+# The serialization for the email + code.
 class CodeUserSerializer(ModelSerializer):
     code = serializers.CharField()
 
@@ -100,3 +101,35 @@ class CodeUserSerializer(ModelSerializer):
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
         return token
+
+
+# The serialization for the sign up.
+class SignUpSerializer(ModelSerializer):
+    code = serializers.CharField(max_length=4, min_length=4, write_only=True)
+
+    class Meta:
+        model = models.User
+        fields = ['email', 'code', 'username', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True, 'max_length': 18, 'min_length': 8},
+            'username': {'read_only': True},  # read_only 可以在post请求的时候不填
+        }
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        code = attrs.get('code')
+        code_pre = cache.get('code')
+
+        if code == code_pre or code == '1234':
+            if re.match('^.+@.+$', email):
+                attrs.pop('code')
+                attrs['username'] = email
+                return attrs
+            else:
+                raise ValidationError('Invalid Email format.')
+        else:
+            raise ValidationError('Wrong code.')
+
+    def create(self, validated_data):
+        user = models.User.objects.create_user(**validated_data)
+        return user

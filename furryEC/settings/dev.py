@@ -131,7 +131,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 注意BASE_DIR是谁
 AUTH_USER_MODEL = 'user.user'
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'furryEC.utils.exception.common_exception_handler'
+    'EXCEPTION_HANDLER': 'furryEC.utils.exception.common_exception_handler',
+    'DEFAULT_THROTTLE_RATES':{
+        'sms':'1/m'
+    }
 }
 
 # log

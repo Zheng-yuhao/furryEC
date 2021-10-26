@@ -1,5 +1,5 @@
 from rest_framework.response import Response
-
+from rest_framework.exceptions import ValidationError
 
 class APIResponse(Response):
     def __init__(self, code=100, msg='Success', result=None, status=None,

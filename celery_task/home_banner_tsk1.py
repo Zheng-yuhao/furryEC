@@ -16,6 +16,5 @@ def banner_update():
     for banner in serialize_banner.data:
         banner['img'] = 'http://127.0.0.1:8000' + banner['img']
     cache.set('banner_list', serialize_banner.data)
-
     return True
 

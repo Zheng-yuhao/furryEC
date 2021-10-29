@@ -16,7 +16,7 @@ from rest_framework.response import Response
 
 
 class BannerView(ListModelMixin, GenericViewSet):
-    queryset = models.Banner.objects.filter(is_delete=False, is_show=True).order_by('display_order')[
+    queryset = models.Banner.objects.filter(is_delete=False, is_show=True).order_by('orders')[
                :settings.BANNER_COUNTER]
     serializer_class = serialize.BannerModelSerializer
 

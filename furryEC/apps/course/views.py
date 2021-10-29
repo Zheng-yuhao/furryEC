@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.filters import OrderingFilter, SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.mixins import ListModelMixin
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from . import models
 from . import serializer
 from .pagnation import CoursePagination
@@ -15,7 +15,7 @@ class CourseCategoryView(GenericViewSet, ListModelMixin):
 
 
 # Course API
-class CourseView(GenericViewSet, ListModelMixin):
+class CourseView(GenericViewSet, ListModelMixin, RetrieveModelMixin):
     queryset = models.Course.objects.filter(is_delete=False, is_show=True).order_by('orders')
     print(queryset)
     serializer_class = serializer.CourseModelSerializer
@@ -23,5 +23,5 @@ class CourseView(GenericViewSet, ListModelMixin):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = ['id', 'price', 'students']
 
-    filter_fields = ['course_category', 'students']
+    filter_fields = ['course_category']
 

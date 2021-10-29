@@ -27,18 +27,18 @@ from furryEC.utils.models import BaseModel
 #
 # # 免费课
 # class FreeCourse(Course):
-#     image = models.ImageField(upload_to='course/free')
+#     image = models.ImageField(upload_to='courses/free')
 #     attachment = models.FileField(upload_to='attachment')
 #
 # # 实战课
 # class ActualCourse(Course):
-#     image = models.ImageField(upload_to='course/actual')
+#     image = models.ImageField(upload_to='courses/actual')
 #     price = models.DecimalField(max_digits=7, decimal_places=2)
 #     # cost = models.DecimalField(max_digits=7, decimal_places=2)
 #
 # # 轻课
 # class LightCourse(Course):
-#     image = models.ImageField(upload_to='course/light')
+#     image = models.ImageField(upload_to='courses/light')
 #     price = models.DecimalField(max_digits=7, decimal_places=2)
 #     # cost = models.DecimalField(max_digits=7, decimal_places=2)
 #     period = models.IntegerField(verbose_name='学习建议周期(month)', default=0)

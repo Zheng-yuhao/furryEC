@@ -36,3 +36,28 @@ class CourseModelSerializer(ModelSerializer):
             'period',
             'section_list',
         ]
+
+
+class CourseSectionSerializer(ModelSerializer):
+    class Meta:
+        model = models.CourseSection
+        fields = [
+            'name',
+            'orders',
+            'section_type_name',
+            'section_link',
+            'duration',
+            'free_trail'
+        ]
+
+
+class CourseChapterSerializer(ModelSerializer):
+    coursesections = CourseSectionSerializer(many=True)
+    class Meta:
+        model = models.CourseChapter
+        fields = [
+            'chapter',
+            'name',
+            'summary',
+            'coursesections'
+        ]

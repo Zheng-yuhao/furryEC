@@ -5,7 +5,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from . import models
 from . import serializer
-from .pagnation import CoursePagination
+from .pagnation import CoursePagination, PageNumberPagination
 
 
 # category view
@@ -17,7 +17,6 @@ class CourseCategoryView(GenericViewSet, ListModelMixin):
 # Course API
 class CourseView(GenericViewSet, ListModelMixin, RetrieveModelMixin):
     queryset = models.Course.objects.filter(is_delete=False, is_show=True).order_by('orders')
-    print(queryset)
     serializer_class = serializer.CourseModelSerializer
     pagination_class = CoursePagination
     filter_backends = [DjangoFilterBackend, OrderingFilter]
@@ -25,3 +24,20 @@ class CourseView(GenericViewSet, ListModelMixin, RetrieveModelMixin):
 
     filter_fields = ['course_category']
 
+
+
+class CourseChapterView(GenericViewSet, ListModelMixin):
+    queryset = models.CourseChapter.objects.filter(is_delete=False, is_show=True)
+    serializer_class = serializer.CourseChapterSerializer
+
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['course']
+
+
+class CourseSearchView(GenericViewSet, ListModelMixin):
+    queryset = models.Course.objects.filter(is_delete=False, is_show=True)
+    serializer_class = serializer.CourseModelSerializer
+    pagination_class = PageNumberPagination
+
+    filter_backends = [SearchFilter]
+    search_fields = ['name']

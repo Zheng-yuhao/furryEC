@@ -1,1 +1,1 @@
-from pay import alipay, gateway
+from .pay import alipay, gateway

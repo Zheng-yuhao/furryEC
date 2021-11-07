@@ -3,12 +3,12 @@ from rest_framework.exceptions import ValidationError
 from django.conf import settings
 from . import models
 import uuid
-from furryEC.libs.alipay.pay import gateway, alipay
+from furryEC.libs.alipay import alipay, gateway
 
 
 class OrderSerializers(serializers.ModelSerializer):
     course = serializers.PrimaryKeyRelatedField(queryset=models.Course.objects.all(),
-                                                write_only=True, mant=True)
+                                                write_only=True, many=True)
 
     class Meta:
         model = models.Order

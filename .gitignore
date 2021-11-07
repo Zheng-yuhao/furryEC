@@ -3,3 +3,5 @@ logs
 scripts
 *.pyc
 pem.txt
+setting.py
+

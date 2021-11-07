@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'user',
     'home',
     'course',
+    'order',
 
 
 ]
@@ -215,3 +216,14 @@ CACHES = {
         }
     }
 }
+
+# Alipay settings
+
+
+BASE_URL = 'http://127.0.0.1:8000'
+
+Furry_URL = 'http://127.0.0.1:8080'
+
+NOTIFY_URL = BASE_URL + "/order/success/"
+
+RETURN_URL = Furry_URL + "/pay/success"

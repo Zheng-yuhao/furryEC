@@ -3,5 +3,4 @@ logs
 scripts
 *.pyc
 pem.txt
-setting.py
-
+furryEC/libs/alipay/setting.py

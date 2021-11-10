@@ -179,8 +179,7 @@ class CourseChapter(BaseModel):
     """章节
     章节跟课程是一（课程）对多（章节多）
     """
-    course = models.ForeignKey("Course", related_name='coursechapters', on_delete=models.CASCADE, verbose_name="课程名称",
-                               db_constraint=False)
+    course = models.ForeignKey("Course", related_name='coursechapters', on_delete=models.CASCADE, verbose_name="课程名称",db_constraint=False)
     chapter = models.SmallIntegerField(verbose_name="第几章", default=1)
     name = models.CharField(max_length=128, verbose_name="章节标题")
     summary = models.TextField(verbose_name="章节介绍", blank=True, null=True)

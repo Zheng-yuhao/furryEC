@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=128, verbose_name='章节标题')),
                 ('summary', models.TextField(blank=True, null=True, verbose_name='章节介绍')),
                 ('pub_date', models.DateField(auto_now_add=True, verbose_name='发布日期')),
-                ('courses', models.ForeignKey(db_constraint=False, on_delete=django.db.models.deletion.CASCADE, related_name='coursechapters', to='courses.Course', verbose_name='课程名称')),
+                ('courses', models.ForeignKey(db_constraint=False, on_delete=django.db.models.deletion.CASCADE, related_name='coursechapters', to='course.Course', verbose_name='课程名称')),
             ],
             options={
                 'verbose_name': '章节',
@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
                 ('duration', models.CharField(blank=True, max_length=32, null=True, verbose_name='视频时长')),
                 ('pub_date', models.DateTimeField(auto_now_add=True, verbose_name='发布时间')),
                 ('free_trail', models.BooleanField(default=False, verbose_name='是否可试看')),
-                ('chapter', models.ForeignKey(db_constraint=False, on_delete=django.db.models.deletion.CASCADE, related_name='coursesections', to='courses.CourseChapter', verbose_name='课程章节')),
+                ('chapter', models.ForeignKey(db_constraint=False, on_delete=django.db.models.deletion.CASCADE, related_name='coursesections', to='course.CourseChapter', verbose_name='课程章节')),
             ],
             options={
                 'verbose_name': '课时',
@@ -125,13 +125,13 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.AddField(
-            model_name='courses',
+            model_name='course',
             name='course_category',
-            field=models.ForeignKey(blank=True, db_constraint=False, null=True, on_delete=django.db.models.deletion.SET_NULL, to='courses.CourseCategory', verbose_name='课程分类'),
+            field=models.ForeignKey(blank=True, db_constraint=False, null=True, on_delete=django.db.models.deletion.SET_NULL, to='course.CourseCategory', verbose_name='课程分类'),
         ),
         migrations.AddField(
-            model_name='courses',
+            model_name='course',
             name='teacher',
-            field=models.ForeignKey(blank=True, db_constraint=False, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='courses.Teacher', verbose_name='授课老师'),
+            field=models.ForeignKey(blank=True, db_constraint=False, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='course.Teacher', verbose_name='授课老师'),
         ),
     ]

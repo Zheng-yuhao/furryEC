@@ -37,7 +37,7 @@ class OrderSerializers(serializers.ModelSerializer):
     def _gen_pay_url(self, out_trade_no, total_amount, subject):
         order_string = alipay.api_alipay_trade_page_pay(
             out_trade_no=out_trade_no,
-            total_amount=total_amount,
+            total_amount=float(total_amount),
             subject=subject,
             return_url=settings.RETURN_URL,
             notify_url=settings.NOTIFY_URL,

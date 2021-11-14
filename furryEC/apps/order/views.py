@@ -34,7 +34,7 @@ class SuccessView(APIView):
             return Response(False)
 
     def post(self, request, *args, **kwargs):
-        data = request.data
+        data = request.data.dict()
         out_trade_no = data.get('out_trade_no', None)
         gmt_payment = data.get('gmt_payment', None)
         signature = data.pop("sign")

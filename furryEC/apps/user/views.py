@@ -44,11 +44,9 @@ class LoginView(ViewSet):
     @action(methods=['GET'], detail=False)
     def check_email(self, request, *args, **kwargs):
         email = request.query_params.get('email')
-        print(email)
         if not email:
             return APIResponse(code=0, msg='Please send the email only.')
         if not re.match('^.+@.+$', email):
-            print('here')
             return APIResponse(code=0, msg='The email format is wrong.')
         try:
             models.User.objects.get(email=email)

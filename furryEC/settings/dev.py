@@ -169,7 +169,7 @@ LOGGING = {
             # 实际开发建议使用ERROR
             'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',
-            # 日志位置,日志文件名,日志保存目录必须手动创建，注：这里的文件路径要注意BASE_DIR代表的是小luffyapi
+            # 日志位置,日志文件名,日志保存目录必须手动创建，注：这里的文件路径要注意BASE_DIR代表的是小api
             'filename': os.path.join(os.path.dirname(BASE_DIR), "logs", "furryEC.log"),
             # 日志文件的最大值,这里我们设置300M
             'maxBytes': 300 * 1024 * 1024,

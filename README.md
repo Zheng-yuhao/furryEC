@@ -27,3 +27,4 @@ you need to modify the code in manage.py and wsgi.py, which should be set the se
 
 ## Project Showcase
 ![Image text](https://github.com/hirrochi0211/furryEC/blob/master/furryec.gif)
+
